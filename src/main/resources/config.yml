@@ -1,0 +1,76 @@
+# 禁用世界
+# 该世界下的所有生物将不会受到 TersusAI 的影响
+DisableWorlds:
+  - unnamed_world_0
+  - unnamed_world_1
+
+# 禁用生物
+# 以下生物类型将不会受到 TersusAI 的影响，如果生物在受到影响后禁用则保留注入
+DisableEntities:
+  - player
+
+# 密集限制
+# 生物生成时判定周围同类生物数量，只会在生成时判定不会二次移除
+EntitySpawnLimit:
+  # 设置为 -1 时禁用，请勿设置为 99999 这类数值
+  range: -1
+  count: -1
+
+# 控制规则
+# 将实体分组并有效的控制 AI 处理频率
+Rules:
+  # 启用调试棒（BLAZE_ROD）
+  debug-item: true
+  # 每组实体的搜索范围
+  collect-range: 10
+  # 每组实体的最少数量
+  collect-size: 10
+  # 日志等级
+  # 等级越高日志打印周期越长
+  logger-level: 10
+  # 处理方法
+  # --------------------------------------
+  # GROUP  = 组实体
+  # SINGLE = 单实体
+  # GLOBAL = 全局
+  # --------------------------------------
+  # $tps[0] = TPS-1m   =（GROUP|GLOBAL）
+  # $tps[2] = TPS-5m   =（GROUP|GLOBAL）
+  # $tps[3] = TPS-15m  =（GROUP|GLOBAL）
+  # $count  = 数量     =（GROUP|GLOBAL）
+  # $p      = 密度     =（GROUP）
+  # --------------------------------------
+  methods:
+    - condition: '$tps[0] > 19.5 && $random < 0.2'
+      inhibit: 0
+      affect: SINGLE
+    - condition: '$tps[0] < 19.5'
+      inhibit: 30
+      affect: SINGLE
+    - condition: '$tps[0] < 17'
+      inhibit: 90
+      affect: GLOBAL
+    - condition: '$tps[0] < 18'
+      inhibit: 60
+      affect: GLOBAL
+    - condition: '$tps[0] < 19'
+      inhibit: 30
+      affect: GLOBAL
+    - condition: '$tps[0] < 19 && ($count > 40 || ($count > 20 && $p > 1.2))'
+      inhibit: 90
+      affect: GROUP
+      logger:
+        - '[Tersus #A] Entity group exceeded the threshold. (tps: $tps, count: $count, p: $p)'
+        - '[Tersus #A] Near: $location'
+    - condition: '$tps[0] < 19 && ($count > 30 || ($count > 15 && $p > 1.2))'
+      inhibit: 60
+      affect: GROUP
+      logger:
+        - '[Tersus #B] Entity group exceeded the threshold. (tps: $tps, count: $count, p: $p)'
+        - '[Tersus #B] Near: $location'
+    - condition: '$tps[0] < 19 && ($count > 20 || ($count > 10 && $p > 1.2))'
+      inhibit: 30
+      affect: GROUP
+      logger:
+        - '[Tersus #C] Entity group exceeded the threshold. (tps: $tps, count: $count, p: $p)'
+        - '[Tersus #C] Near: $location'
