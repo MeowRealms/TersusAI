@@ -1,7 +1,6 @@
 package ink.ptms.tersusai
 
 import com.google.common.collect.Maps
-import ink.ptms.tersusai.TersusAI.reload
 import ink.ptms.tersusai.inject.TersusInjector
 import ink.ptms.tersusai.rule.CollectTask
 import ink.ptms.tersusai.rule.Collector
@@ -88,7 +87,7 @@ object TersusCommand {
                 collectTask.groups.forEach { group ->
                     Components.empty()
                         .append("§7§l[§f§lTersus§7§l] §8  ")
-                        .append(i++.toString() + " §7-> §f" + group.entities.size + " §8(" + floor(Math.PI * group.range * group.range) + "m^2) (ρ=" + Coerce.format(group.entities.size.toDouble() / group.density) + ")")
+                        .append(i++.toString() + " §7-> §f" + group.entities.size + " §8(" + floor(Math.PI * group.range * group.range) + "m^2) (ρ=" + group.density + ")")
                         .hoverText("点击传送至附近")
                         .clickRunCommand("/tp " + group.center.x + " " + group.center.y + " " + group.center.z)
                         .sendTo(adaptPlayer(sender))
@@ -104,7 +103,7 @@ object TersusCommand {
     @CommandBody(optional = true)
     val reload = subCommand {
         execute<CommandSender> { sender, _, _ ->
-            reload()
+            TersusAI.reload()
             sender.info("§7重载完成.")
         }
     }

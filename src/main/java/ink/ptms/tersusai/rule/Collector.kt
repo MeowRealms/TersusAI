@@ -30,13 +30,13 @@ object Collector {
                     global = true
                     inhibit = method.inhibit
                     collectTask.entities.forEach { entity -> level(entity.livingEntity, method.inhibit) }
-                    printLog(method, world.spawnLocation, collectTask.entities.size, 0)
+                    printLog(method, world.spawnLocation, collectTask.entities.size, 0.0)
                     break
                 }
             }
             for (collectGroup in collectTask.groups) {
                 for (method in TersusAI.methods) {
-                    if (method.check(collectGroup.entities.size, collectGroup.density.toDouble(), RuleAffect.GROUP) && method.inhibit > inhibit) {
+                    if (method.check(collectGroup.entities.size, collectGroup.density, RuleAffect.GROUP) && method.inhibit > inhibit) {
                         collectGroup.entities.forEach { entity -> level(entity.livingEntity, method.inhibit) }
                         printLog(method, collectGroup.center, collectGroup.entities.size, collectGroup.density)
                         break
@@ -70,9 +70,9 @@ object Collector {
         return world.livingEntities.filter { TersusAI.isAffected(it) }.map { CollectEntity(it) }
     }
 
-    private fun printLog(method: Rule, location: Location, size: Int, i: Int) {
+    private fun printLog(method: Rule, location: Location, size: Int, i: Double) {
         if (filter.computeIfAbsent(Coordinate(location)) { Baffle.of(conf.getInt("Rules.logger-level", 10)) }.hasNext()) {
-            method.log(size, i.toDouble(), location)
+            method.log(size, i, location)
         }
     }
 }

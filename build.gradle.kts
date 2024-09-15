@@ -1,17 +1,21 @@
-import io.izzel.taboolib.gradle.*
+import io.izzel.taboolib.gradle.Bukkit
+import io.izzel.taboolib.gradle.BukkitNMSUtil
+import io.izzel.taboolib.gradle.CommandHelper
+import io.izzel.taboolib.gradle.JavaScript
 
 plugins {
     java
-    id("io.izzel.taboolib") version "2.0.2"
+    id("io.izzel.taboolib") version "2.0.17"
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
 }
 
 taboolib {
     env {
-        install(UNIVERSAL, NMS_UTIL, BUKKIT_ALL, EXPANSION_JAVASCRIPT)
+        install(BukkitNMSUtil, CommandHelper, JavaScript, Bukkit)
     }
     version {
-        taboolib = "6.1.0"
+        taboolib = "6.2.0-beta5"
+        coroutines = null
     }
 }
 
@@ -21,8 +25,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("ink.ptms.core:v12004:12004:mapped")
-    compileOnly("ink.ptms.core:v12004:12004:universal")
+    compileOnly("ink.ptms.core:v12101:12101:mapped")
+    compileOnly("ink.ptms.core:v12101:12101:universal")
 //    compileOnly("ink.ptms.core:v11604:11604")
     compileOnly("com.google.guava:guava:32.1.3-jre")
     compileOnly(kotlin("stdlib"))
@@ -34,6 +38,6 @@ tasks.withType<JavaCompile> {
 }
 
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }

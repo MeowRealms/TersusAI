@@ -44,32 +44,29 @@ Rules:
     - condition: '$tps[0] > 19.5 && $random < 0.2'
       inhibit: 0
       affect: SINGLE
-    - condition: '$tps[0] < 19.5'
-      inhibit: 30
-      affect: SINGLE
     - condition: '$tps[0] < 17'
-      inhibit: 90
-      affect: GLOBAL
-    - condition: '$tps[0] < 18'
       inhibit: 60
       affect: GLOBAL
-    - condition: '$tps[0] < 19'
-      inhibit: 30
+    - condition: '$tps[0] < 18'
+      inhibit: 40
       affect: GLOBAL
-    - condition: '$tps[0] < 19 && ($count > 40 || ($count > 20 && $p > 1.2))'
-      inhibit: 90
+    - condition: '$tps[0] < 19'
+      inhibit: 20
+      affect: GLOBAL
+    - condition: '($count > 40 || ($count > 20 && $p > 1.4))'
+      inhibit: 60
       affect: GROUP
       logger:
         - '[Tersus #A] Entity group exceeded the threshold. (tps: $tps, count: $count, p: $p)'
         - '[Tersus #A] Near: $location'
-    - condition: '$tps[0] < 19 && ($count > 30 || ($count > 15 && $p > 1.2))'
-      inhibit: 60
+    - condition: '($count > 30 || ($count > 15 && $p > 1.3))'
+      inhibit: 40
       affect: GROUP
       logger:
         - '[Tersus #B] Entity group exceeded the threshold. (tps: $tps, count: $count, p: $p)'
         - '[Tersus #B] Near: $location'
-    - condition: '$tps[0] < 19 && ($count > 20 || ($count > 10 && $p > 1.2))'
-      inhibit: 30
+    - condition: '($count > 20 || ($count > 10 && $p > 1.2))'
+      inhibit: 20
       affect: GROUP
       logger:
         - '[Tersus #C] Entity group exceeded the threshold. (tps: $tps, count: $count, p: $p)'

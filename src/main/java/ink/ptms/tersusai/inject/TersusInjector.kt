@@ -32,9 +32,8 @@ abstract class TersusInjector {
         @Awake(LifeCycle.LOAD)
         fun init() {
             generator = when (MinecraftVersion.major) {
-                -1 -> error("TersusAI doesn't support the current version \"${MinecraftVersion.minecraftVersion}\".")
-
-                else -> nmsProxy("ink.ptms.tersusai.inject.impl.Injector12000")
+                13 -> nmsProxy("ink.ptms.tersusai.inject.impl.Injector12100")
+                else -> error("TersusAI doesn't support the current version \"${MinecraftVersion.minecraftVersion}\".")
             }
         }
 

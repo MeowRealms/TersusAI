@@ -1,10 +1,10 @@
 package ink.ptms.tersusai.inject
 
-import net.minecraft.world.entity.EntityInsentient
-import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector
+import net.minecraft.world.entity.Mob
+import net.minecraft.world.entity.ai.goal.GoalSelector
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_20_R3.CraftServer
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftLivingEntity
+import org.bukkit.craftbukkit.CraftServer
+import org.bukkit.craftbukkit.entity.CraftLivingEntity
 import org.bukkit.entity.LivingEntity
 
 /**
@@ -24,25 +24,25 @@ class TersusInjectorImpl : TersusInjector() {
 //        .apply { isAccessible = true }
 
     override fun getGoal0(entity: LivingEntity): TersusSelector? {
-        val pathfinder = ((entity as CraftLivingEntity).handle as EntityInsentient).bO
+        val pathfinder = ((entity as CraftLivingEntity).handle as Mob).goalSelector
         return pathfinder as? TersusSelector
     }
 
     override fun getTarget0(entity: LivingEntity): TersusSelector? {
-        val pathfinder = ((entity as CraftLivingEntity).handle as EntityInsentient).bP
+        val pathfinder = ((entity as CraftLivingEntity).handle as Mob).targetSelector
         return pathfinder as? TersusSelector
     }
 
     override fun setGoal0(entity: LivingEntity, selector: TersusSelector) {
-        ((entity as CraftLivingEntity).handle as EntityInsentient).bO = selector as PathfinderGoalSelector
+        ((entity as CraftLivingEntity).handle as Mob).goalSelector = selector as GoalSelector
     }
 
     override fun setTarget0(entity: LivingEntity, selector: TersusSelector) {
-        ((entity as CraftLivingEntity).handle as EntityInsentient).bP = selector as PathfinderGoalSelector
+        ((entity as CraftLivingEntity).handle as Mob).targetSelector = selector as GoalSelector
     }
 
     override fun isInsentient0(entity: LivingEntity): Boolean {
-        return (entity as CraftLivingEntity).handle is EntityInsentient
+        return (entity as CraftLivingEntity).handle is Mob
     }
 
 //    override fun getLivingEntities(world: World): List<LivingEntity> {

@@ -1,8 +1,7 @@
 # TersusAI
 
 ## 改动
-- 仅支持paper 1.20+
-- 需要用一些方法禁用AsyncCatcher检测
+- 仅支持leaf 1.21+
 
 ## 前言
 

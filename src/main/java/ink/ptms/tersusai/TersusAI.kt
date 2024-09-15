@@ -3,6 +3,7 @@ package ink.ptms.tersusai
 import ink.ptms.tersusai.inject.TersusInjector
 import ink.ptms.tersusai.rule.Rule
 import org.bukkit.entity.LivingEntity
+import org.spigotmc.AsyncCatcher
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.function.info
 import taboolib.common.platform.function.warning
@@ -37,12 +38,13 @@ object TersusAI : Plugin() {
     }
 
     override fun onEnable() {
-        conf.onReload { reload() }
+        AsyncCatcher.enabled = false
         reload()
     }
 
     fun reload() {
         methods.clear()
+        conf.reload()
         conf.getList("Rules.methods")!!.forEach {
             if (it is Map<*, *>) {
                 if (it.containsKey("logger") && it["logger"] is List<*>) {
